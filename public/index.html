@@ -1,0 +1,49 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<body>
+	<form id='login'>
+		<input type='text' name='email' />
+		<input type='password' name='password' />
+
+		<button type='submit'>Iniciar sesión</button>
+	</form>
+	<script>
+		window.addEventListener('DOMContentLoaded', () => {
+			const form = document.getElementById('login');
+
+			form.addEventListener('submit', submitForm);
+		});
+
+		const submitForm = ev => {
+			ev.preventDefault();
+
+			const { email, password } = ev.target
+
+			const response = fetch('http://localhost:5000/auth/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: email.value,
+					password: password.value
+				})
+			})
+				.then(res => {
+					if (res.ok)
+						res.json()
+							.then(data => localStorage.setItem('jwt', data.token))
+							.then(() => alert('Login correcto'))
+					else throw Error(res.status);
+				})
+				.catch(err => alert('Login incorrecto'))
+		}	
+	</script>
+</body>
+
+</html>

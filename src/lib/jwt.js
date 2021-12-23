@@ -1,8 +1,10 @@
 const { sign, verify } = require("jsonwebtoken");
 
+const jwtSecret = process.env.JWT_SECRET || "default_secret_key";
+
 const jwtSignAsync = (payload, options) => {
   return new Promise((resolve, reject) => {
-    sign(payload, PRIVATEKEY, options, (err, token) => {
+    sign(payload, jwtSecret, options, (err, token) => {
       if (err) reject(err);
       else resolve(token);
     });
