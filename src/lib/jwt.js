@@ -13,7 +13,7 @@ const jwtSignAsync = (payload, options) => {
 
 const jwtVerifyAsync = (token) => {
   return new Promise((resolve, reject) => {
-    return verify(token, PRIVATEKEY, (err, decoded) => {
+    return verify(token, jwtSecret, (err, decoded) => {
       if (err) reject(err);
       else resolve(decoded);
     });
