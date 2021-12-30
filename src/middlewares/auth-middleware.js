@@ -1,4 +1,5 @@
 const { jwtVerifyAsync } = require("../lib/jwt");
+const { findById } = require("../repository/user.repository");
 
 /**
  * Middleware encargado de autenticar al usuario
@@ -18,7 +19,7 @@ module.exports = async (req, res, next) => {
      * Sólo nos interesa el ID porque sólo estamos comprobando
      * si el usuario existe o no
      */
-    const userFound = usersDB.find((user) => user.id === id);
+    const userFound = findById(id);
 
     if (!userFound) return res.status(401).send();
 
