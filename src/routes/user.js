@@ -10,9 +10,9 @@ router.use(authMiddleware);
  * Devuelve los datos del usuario a partir del token JWT que se obtiene de los Headers.
  */
 router.get("/profile", async (req, res) => {
-  const { id } = req;
+  const { id: reqId } = req;
 
-  const userFound = findById(id);
+  const userFound = findById(reqId);
 
   if (!userFound) return res.status(401).send();
 
