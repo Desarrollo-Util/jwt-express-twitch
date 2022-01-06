@@ -1,36 +1,18 @@
-import { useEffect, useState } from 'react';
-import Login from './components/Login';
-import Profile from './components/Profile';
+import Login from "./components/pages/Login";
+import Profile from "./components/pages/Profile";
+import { AuthContext } from "./lib/context/auth-context";
+import { useAuth } from "./lib/hooks/use-auth";
 
 const App = () => {
-  const [auth, setAuth] = useState();
+  const [auth, setAuth] = useAuth();
 
-  useEffect(() => {
-    profileRequest(token);
-  },[])
+  if (!auth) return <span>Loading...</span>;
 
   return (
-    <>
-    {auth ? <Profile/> : <Login/>}
-    </>
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      {auth.user ? <Profile /> : <Login />}
+    </AuthContext.Provider>
   );
 };
-
-const profileRequest = async (token) => {
-  const response = await fetch("http://localhost:5000/user/profile", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (response.ok){
-    const data = await response.json();
-  } else {
-    localStorage.removeItem('jid')
-  }
-}
-
-
 
 export default App;

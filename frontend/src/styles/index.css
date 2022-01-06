@@ -1,0 +1,7 @@
+@import "./normalize.css";
+@import "./fonts.css";
+
+body {
+  background: #1d1e26;
+  color: white;
+}
